@@ -1,0 +1,6 @@
+{
+  "name": "MeetMind",
+  "description": "Your meetings are remembered. MeetMind uses persistent AI memory powered by Hindsight to turn every conversation into context for the next one.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

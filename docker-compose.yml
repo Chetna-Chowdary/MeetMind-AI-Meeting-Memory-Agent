@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  meetmind-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - HINDSIGHT_API_URL=${HINDSIGHT_API_URL:-https://api.hindsight.vectorize.io}
+      - HINDSIGHT_API_KEY=${HINDSIGHT_API_KEY}
+      - HINDSIGHT_BANK_ID=${HINDSIGHT_BANK_ID:-meetmind-demo}
+    restart: unless-stopped
+
+  # Optional local Python backend container if running FastAPI directly:
+  meetmind-fastapi:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - HINDSIGHT_API_URL=${HINDSIGHT_API_URL:-https://api.hindsight.vectorize.io}
+      - HINDSIGHT_API_KEY=${HINDSIGHT_API_KEY}
+      - HINDSIGHT_BANK_ID=${HINDSIGHT_BANK_ID:-meetmind-demo}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    profiles:
+      - full-microservices
